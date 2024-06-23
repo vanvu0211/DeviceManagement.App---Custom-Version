@@ -1,0 +1,221 @@
+﻿<Window x:Class="FabLab.DeviceManagement.DesktopApplication.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FabLab.DeviceManagement.DesktopApplication"
+        xmlns:prism="http://prismlibrary.com/"
+        mc:Ignorable="d"
+        xmlns:projects="clr-namespace:FabLab.DeviceManagement.DesktopApplication.Core.Application.ViewModels.Project;assembly=FabLab.DeviceManagement.DesktopApplication.Core"
+        xmlns:view="clr-namespace:FabLab.DeviceManagement.DesktopApplication.Views.Project"
+        xmlns:notifications="clr-namespace:Notifications.Wpf.Core.Controls;assembly=Notifications.Wpf.Core"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:borrowreturn="clr-namespace:FabLab.DeviceManagement.DesktopApplication.Views.BorrowReturn"
+        xmlns:maintenance="clr-namespace:FabLab.DeviceManagement.DesktopApplication.Views.Maintenance"
+        xmlns:supervise="clr-namespace:FabLab.DeviceManagement.DesktopApplication.Views.Supervise"
+        xmlns:lendreturn="clr-namespace:FabLab.DeviceManagement.DesktopApplication.Views.LendReturn"
+        xmlns:project="clr-namespace:FabLab.DeviceManagement.DesktopApplication.Views.Project"
+        xmlns:device="clr-namespace:FabLab.DeviceManagement.DesktopApplication.Views.Device"
+        xmlns:viewmodels="clr-namespace:FabLab.DeviceManagement.DesktopApplication.Core.Application.ViewModels;assembly=FabLab.DeviceManagement.DesktopApplication.Core"
+        d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
+        Background="{StaticResource ColorBackground}"
+        WindowStartupLocation="CenterScreen"
+        x:Name="MainView"
+        xmlns:md="clr-namespace:ModalControl;assembly=ModalControl"
+        Title="FabLabDeviceManagement"
+        Height="900"
+        FontFamily="Poppins"
+        Width="1600">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <prism:InvokeCommandAction Command="{Binding LoadDataStoreCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+
+        <Grid>
+            <TabControl TabStripPlacement="Left"
+                        Style="{StaticResource TabControlLogoStyle}">
+
+                <TabItem   IsEnabled="False"
+                           Style="{StaticResource TabItemLogoStyle}"
+                           Height="250"
+                           Width="250"
+                           BorderThickness="0"
+                           Padding="0">
+                    <TabItem.Header>
+                        <Image Source="/Resources/Images/Logo.png"
+                               Height="250"
+                               Width="250" />
+                    </TabItem.Header>
+                </TabItem>
+
+                <TabItem IsEnabled="False"
+                         Style="{StaticResource TabItemStyle1}"
+                         Background="DarkBlue"
+                         BorderThickness="0"
+                         Height="50">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Center">
+
+                            <HeaderedContentControl        Content="QUẢN LÍ"
+                                                           HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center"
+                                                           FontSize="30"
+                                                           Foreground="White"
+                                                           FontWeight="DemiBold" />
+                        </StackPanel>
+                    </TabItem.Header>
+                  
+
+                </TabItem>
+
+                <TabItem Selector.IsSelected="True"
+                         Height="65"
+                         Style="{StaticResource TabItemStyle}">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Left">
+                            <materialDesign:PackIcon Kind="Devices"
+                                                     Width="20"
+                                                     Height="20"
+                                                     HorizontalAlignment="Left"
+                                                     VerticalAlignment="Center"
+                                                     Margin="0,0,5,0" />
+                            <HeaderedContentControl  Content="Quản lí thiết bị"
+                                                     HorizontalAlignment="Center"
+                                                     FontSize="20"
+                                                     FontWeight="Thin"
+                                                     Margin="0" />
+
+
+                        </StackPanel>
+                     
+                    </TabItem.Header>
+                    <device:DeviceManagementView DataContext="{Binding DeviceManagementViewModel}" />
+                </TabItem>
+
+                <TabItem Style="{StaticResource TabItemStyle}"
+                         Height="65">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Left">
+                            <materialDesign:PackIcon Kind=" WrenchCogOutline"
+                                                     Width="20"
+                                                     Height="20"
+                                                     HorizontalAlignment="Center"
+                                                     VerticalAlignment="Center"
+                                                     Margin="0,0,6,0" />
+                            <HeaderedContentControl  Content="Quản lí loại thiết bị"
+                                                     HorizontalAlignment="Center"
+                                                     FontSize="20"
+                                                     FontWeight="Thin"
+                                                     Margin="0" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <device:EquipmentTypeView DataContext="{Binding EquipmentTypeViewModel}" />
+                </TabItem>
+
+                <TabItem Style="{StaticResource TabItemStyle}"
+                         Height="65">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Left">
+                            <materialDesign:PackIcon Kind="GpsFixed"
+                                                     Width="20"
+                                                     Height="20"
+                                                     HorizontalAlignment="Center"
+                                                     VerticalAlignment="Center"
+                                                     Margin="0,0,6,0" />
+                            <HeaderedContentControl  Content="Quản lí NCC/Vị trí/Tag"
+                                                     HorizontalAlignment="Center"
+                                                     FontSize="20"
+                                                     FontWeight="Thin"
+                                                     Margin="0 0 10 0" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <device:SupplierAndLocationView DataContext="{Binding SupplierLocationTagViewModel}" />
+                </TabItem>
+                <!-- PreviewMouseDown="TabItem_PreviewMouseDown"-->
+                <!--<TabItem Style="{StaticResource TabItemStyle}"
+                         Height="65">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Left">
+                            <materialDesign:PackIcon Kind="Autorenew"
+                                                     Width="20"
+                                                     Height="20"
+                                                     HorizontalAlignment="Center"
+                                                     VerticalAlignment="Center"
+                                                     Margin="0,0,6,0" />
+                            <HeaderedContentControl  Content="Quản lý mượn/trả"
+                                                     HorizontalAlignment="Center"
+                                                     FontSize="20"
+                                                     FontWeight="Thin"
+                                                     Margin="0,0,40,0" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <borrowreturn:CreateNewRequestView DataContext="{Binding BorrowReturnNavigation}" />
+                </TabItem>-->
+
+                <!--<TabItem IsEnabled="False"
+                         Style="{StaticResource TabItemStyle1}"
+                         Background="DarkBlue"
+                         BorderThickness="0"
+                         Height="50">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Center">
+
+                            <HeaderedContentControl        Content="GIÁM SÁT"
+                                                           HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center"
+                                                           FontSize="30"
+                                                           Foreground="White"
+                                                           FontWeight="DemiBold" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <device:DeviceManagementNavigationView DataContext="{Binding DeviceManagementNavigation}" />
+                </TabItem>
+
+                <TabItem Style="{StaticResource TabItemStyle}"
+                         Height="65">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Left">
+                            <materialDesign:PackIcon Kind="Home"
+                                                     Width="20"
+                                                     Height="20"
+                                                     HorizontalAlignment="Left"
+                                                     VerticalAlignment="Center"
+                                                     Margin="-30,0,5,0" />
+                            <HeaderedContentControl  Content="FabLab"
+                                                     HorizontalAlignment="Right"
+                                                     FontSize="20"
+                                                     FontWeight="Thin"
+                                                     Margin="0 0 100 0 " />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <supervise:FabLabSuperviseView DataContext="{Binding FablabSupervise}"></supervise:FabLabSuperviseView>
+
+                </TabItem>-->
+
+            </TabControl>
+
+        </Grid>
+        <notifications:NotificationArea MaxItems="1"
+                                        Margin="-10 0 0 20"
+                                        Width="258"
+                                        VerticalAlignment="Bottom"
+                                        HorizontalAlignment="Left"
+                                        x:Name="WindowArea"
+                                        IsEnabled="False"
+                                        Position="BottomLeft" />
+
+    </Grid>
+
+
+</Window>
